@@ -21,9 +21,11 @@ spec:
         - name: ca
           mountPath: /certs/ca.crt
           subPath: ca.crt
+        - name: mqtt-client-token
+          mountPath: /var/run/secrets/tokens
         env:
-        - name: ConnectionStrings__Default
-          value: HostName=aio-mq-dmqtt-frontend;TcpPort=1883;UseTls=false;ClientId=AkriConnector
+        - name: ConnectionStrings__Mq
+          value: "HostName=aio-mq-dmqtt-frontend;ClientId=MqttWorker;CaFile=/certs/ca.crt;UserName=$sat;PasswordFile=/var/run/secrets/tokens/mqtt-client-token;CleanStart=false;ConnectionTimeout=PT5S"
         - name: mqttDiag
           value: "false"
       volumes:
@@ -33,3 +35,10 @@ spec:
           items:
             - key: ca.crt 
               path: ca.crt
+      - name: mqtt-client-token
+        projected:
+          sources:
+          - serviceAccountToken:
+              path: mqtt-client-token
+              audience: aio-mq
+              expirationSeconds: 1200
