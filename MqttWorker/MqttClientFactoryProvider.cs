@@ -15,7 +15,7 @@ internal static class MqttClientFactoryProvider
         IConfiguration? config = service.GetService<IConfiguration>();
         bool mqttDiag = config!.GetValue<bool>("mqttDiag");
         IMqttClient mqttClient;
-        ILogger logger = LoggerFactory.Create(builder => builder.AddSimpleConsole(f => {f.SingleLine = true;f.TimestampFormat="T";}).AddConfiguration()).CreateLogger<Worker>();
+        ILogger logger = LoggerFactory.Create(builder => builder.AddConfiguration(config!)).CreateLogger<Worker>();
 
         if (mqttDiag)
         {

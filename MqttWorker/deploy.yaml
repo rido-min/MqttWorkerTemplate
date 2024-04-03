@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqttworker
+  namespace: azure-iot-operations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mqttworker
+  template:
+    metadata:
+      labels:
+        app: mqttworker
+    spec:
+      containers:
+      - name: mqttworker
+        image: <local-registry>/mqttworker:latest
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: ca
+          mountPath: /certs/ca.crt
+          subPath: ca.crt
+        env:
+        - name: ConnectionStrings__Default
+          value: HostName=aio-mq-dmqtt-frontend;TcpPort=1883;UseTls=false;ClientId=AkriConnector
+        - name: mqttDiag
+          value: "false"
+      volumes:
+      - name: ca
+        configMap:
+          name: aio-ca-trust-bundle-test-only
+          items:
+            - key: ca.crt 
+              path: ca.crt
