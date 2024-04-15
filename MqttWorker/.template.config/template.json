@@ -3,7 +3,7 @@
     "author": "Rido",
     "classifications": [ "Mqtt", "Worker" ],
     "identity": "Rido.MqttWorkerTemplate",
-    "name": "dotnet mqtt worker",
+    "name": "Mqtt Worker",
     "shortName": "mqttworker",
     "sourceName": "MqttWorker",
     "preferNameDirectory": true,
