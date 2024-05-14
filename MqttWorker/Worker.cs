@@ -27,7 +27,7 @@ public class Worker(IMqttClient mqttClient, IServiceProvider provider, ILogger<W
         string cs = configuration.GetConnectionString("Mq")!;
         MqttConnectionSettings mcs = MqttConnectionSettings.FromConnectionString(cs);
         MqttClientConnectResult connAck = await mqttClient.ConnectAsync(mcs, stoppingToken);
-
+        
         if (connAck.ResultCode != MqttClientConnectResultCode.Success)
         {
             logger.LogError("Failed to connect to MQTT broker: {connAck.ResultCode}", connAck.ResultCode);
