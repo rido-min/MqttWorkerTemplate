@@ -1,19 +1,16 @@
-﻿using MQTTnet.Client;
+﻿using Akri.Mqtt;
+using Akri.Mqtt.Session;
+using MQTTnet.Protocol;
 
 namespace MqttWorker;
 
-internal class ProducerService(IMqttClient mqttClient, ILogger<ProducerService> logger)
+internal class ProducerService(MqttSessionClient mqttClient)
 {
-    public Task SendMessageAsync(string topic, string message, CancellationToken cancellationToken = default)
-    {
-        if (mqttClient.IsConnected)
-        {
-            return mqttClient.PublishStringAsync(topic, message, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce, false, cancellationToken);
-        }
-        else
-        {
-            logger.LogWarning("Missing one message");
-            return Task.CompletedTask;
-        }
-    }
+    public Task SendMessageAsync(string topic, string message, CancellationToken cancellationToken = default) 
+        => mqttClient.PublishAsync(
+            new MQTTnet.MqttApplicationMessageBuilder()
+                .WithTopic(topic)
+                .WithPayload(message)
+                .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+                .Build(), cancellationToken);
 }

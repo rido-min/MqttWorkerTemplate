@@ -1,9 +1,10 @@
 using Akri.Mqtt.Connection;
+using Akri.Mqtt.Session;
 using MQTTnet.Client;
 
 namespace MqttWorker;
 
-public class Worker(IMqttClient mqttClient, IServiceProvider provider, ILogger<Worker> logger, IConfiguration configuration) : BackgroundService
+public class Worker(MqttSessionClient mqttClient, IServiceProvider provider, ILogger<Worker> logger, IConfiguration configuration) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -24,8 +25,7 @@ public class Worker(IMqttClient mqttClient, IServiceProvider provider, ILogger<W
 
     private async Task ConnectAsync(CancellationToken stoppingToken)
     {
-        string cs = configuration.GetConnectionString("Mq")!;
-        MqttConnectionSettings mcs = MqttConnectionSettings.FromConnectionString(cs);
+        MqttConnectionSettings mcs = MqttConnectionSettings.FromConnectionString(configuration.GetConnectionString("Default")!);
         MqttClientConnectResult connAck = await mqttClient.ConnectAsync(mcs, stoppingToken);
         
         if (connAck.ResultCode != MqttClientConnectResultCode.Success)

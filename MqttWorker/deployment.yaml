@@ -41,4 +41,3 @@ spec:
           - serviceAccountToken:
               path: mqtt-client-token
               audience: aio-mq
-              expirationSeconds: 1200

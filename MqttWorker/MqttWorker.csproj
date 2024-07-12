@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Akri.Mqtt" Version="0.4.21-alpha" />
+    <PackageReference Include="Akri.Mqtt" Version="0.4.138-alpha" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@ using MqttWorker;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 builder.Services
-    .AddSingleton(MqttClientFactoryProvider.MqttClientFactory)
+    .AddSingleton(MqttSessionClientFactoryProvider.MqttSessionClientFactory)
     .AddTransient<ProducerService>()
     .AddTransient<ConsumerService>()
     .AddHostedService<Worker>();
