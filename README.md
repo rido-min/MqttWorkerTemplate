@@ -5,8 +5,7 @@ dotnet template to create a Worker project ready to Pub/Sub to the MQ broker in 
 ## Features
 
 - Configure .NET DI with
-- - A MqttClient as a Singleton
-- - MqttClient configured to re-connect if the connection drops
+- - A MqttSessionClient as a Singleton
 - - Pub/Sub binders using the MqttClient
 - - A Hosted service to initialize the MqttClient
 - A `deployment.yaml` file to easily deploy into a AIO cluster
