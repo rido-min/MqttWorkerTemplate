@@ -17,6 +17,12 @@
             "type": "parameter",
             "datatype": "bool",
             "defaultValue": "false"
+        },
+        "localRegistry" : {
+            "type": "parameter",
+            "datatype": "string",
+            "replaces": "<local-registry>",
+            "defaultValue": "localhost:5500"
         }
     },
     "sources": [

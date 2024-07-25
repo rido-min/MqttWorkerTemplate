@@ -27,22 +27,3 @@ dotnet new install <Path-To-Rido.MqttWorker.nupkg>
 ```
 dotnet new mqttworker -o MyMqttWorker
 ```
-
-## Project files
-
-```
-MyMqttWorker
-│   appsettings.Development.json
-│   appsettings.json
-│   build.cmd
-│   ConsumerService.cs
-│   deployment.yaml
-│   MqttClientFactoryProvider.cs
-│   MyMqttWorker.csproj
-│   nuget.config
-│   ProducerService.cs
-│   Program.cs
-│   Worker.cs
-└───Properties
-        launchSettings.json
-```
