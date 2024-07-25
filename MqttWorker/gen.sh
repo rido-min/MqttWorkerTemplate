@@ -1,0 +1,2 @@
+dotnet tool install -g Akri.Dtdl.CodeGen --add-source https://pkgs.dev.azure.com/e4k-sdk/SdkLite/_packaging/sdklite-previews/nuget/v3/index.json --prerelease
+Akri.Dtdl.CodeGen --modelFile HelloModel.json --outputDir . --lang csharp

@@ -1,6 +1,7 @@
 using Akri.Mqtt.Connection;
 using Akri.Mqtt.Session;
 using MQTTnet.Client;
+using MqttWorker.dtmi_akri_samples_HelloWorld__1;
 
 namespace MqttWorker;
 
@@ -10,15 +11,15 @@ public class Worker(MqttSessionClient mqttClient, IServiceProvider provider, ILo
     {
         await ConnectAsync(stoppingToken);
 
-        ConsumerService consumer = provider.GetService<ConsumerService>()!;
-        consumer.OnMessageReceived += m => logger.LogInformation("Received message {m}", m);
-        await consumer.StartAsync("test/mqtt", stoppingToken);
+        HelloWorldClient client = provider.GetService<HelloWorldClient>()!;
+        await client.StartAsync(stoppingToken);
 
-        ProducerService producer = provider.GetService<ProducerService>()!;
+        HelloWorldService service = provider.GetService<HelloWorldService>()!;
+        await service.StartAsync(null, stoppingToken);
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            await producer.SendMessageAsync("test/mqtt", "hello mqtt");
+            await client.HelloAsync(mqttClient.ClientId, new HelloCommandRequest { HelloRequest = "World" }, null, null, stoppingToken);
             await Task.Delay(5000, stoppingToken);
         }
     }
